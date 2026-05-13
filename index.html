@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ebuka Anulugwo — AI Automation Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#0a0a0a;--white:#ffffff;--off:#f8f7f5;
+    --gray-100:#f2f1ef;--gray-200:#e4e3e0;--gray-400:#b0afa9;--gray-600:#6b6a66;--gray-800:#2e2d2b;
+    --green:#1a5c2e;--green-light:#eef7f1;
+    --serif:'Instrument Serif',serif;--sans:'Geist',sans-serif;
+    --radius:8px;--radius-lg:14px;--max:1100px;--nav-h:64px;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--black);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--gray-200)}
+  .nav-inner{max-width:var(--max);margin:0 auto;padding:0 2rem;height:100%;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .nav-logo{font-family:var(--serif);font-size:1.15rem;color:var(--black);text-decoration:none;flex-shrink:0}
+  .nav-logo span{font-style:italic;color:var(--gray-600)}
+  .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;margin-left:auto}
+  .nav-links a{font-size:.875rem;color:var(--gray-600);text-decoration:none;transition:color .15s}
+  .nav-links a:hover,.nav-links a.active{color:var(--black)}
+  .nav-cta{background:var(--black);color:var(--white)!important;padding:.45rem 1.1rem;border-radius:100px;font-size:.8rem!important}
+  .nav-cta:hover{opacity:.8}
+  .nav-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center 15%;border:2px solid var(--gray-200);flex-shrink:0;display:block;transition:border-color .15s}
+  .nav-avatar:hover{border-color:var(--gray-400)}
+  .nav-toggle{display:none;background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--black);padding:.25rem;order:-1}
+  @media(max-width:680px){
+    .nav-links{display:none;position:absolute;top:var(--nav-h);left:0;right:0;background:var(--white);flex-direction:column;padding:1.5rem 2rem;gap:1.25rem;border-bottom:0.5px solid var(--gray-200)}
+    .nav-links.open{display:flex}
+    .nav-toggle{display:block}
+  }
+  .page{display:none;padding-top:var(--nav-h)}
+  .page.active{display:block}
+
+  /* HOME */
+  .hero{max-width:var(--max);margin:0 auto;padding:7rem 2rem 5rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .hero h1{font-family:var(--serif);font-size:clamp(2.8rem,5vw,4.2rem);line-height:1.05;letter-spacing:-.03em;margin-bottom:1.5rem;font-weight:400}
+  .hero h1 em{font-style:italic;color:var(--gray-600)}
+  .hero-sub{font-size:1rem;color:var(--gray-600);line-height:1.8;max-width:420px;margin-bottom:2.5rem;font-weight:300}
+  .hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--sans);font-size:.875rem;padding:.6rem 1.4rem;border-radius:100px;text-decoration:none;transition:all .15s;cursor:pointer;border:none;font-weight:400}
+  .btn-dark{background:var(--black);color:var(--white)}
+  .btn-dark:hover{opacity:.8}
+  .btn-outline{background:transparent;color:var(--black);border:0.5px solid var(--gray-400)}
+  .btn-outline:hover{border-color:var(--black);background:var(--gray-100)}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+  .stat{background:var(--gray-100);border-radius:var(--radius-lg);padding:1.5rem;border:0.5px solid var(--gray-200)}
+  .stat .num{font-family:var(--serif);font-size:2.8rem;line-height:1;letter-spacing:-.03em;margin-bottom:.3rem}
+  .stat .lbl{font-size:.75rem;color:var(--gray-600);letter-spacing:.04em;text-transform:uppercase}
+  .stat.dark{background:var(--black);color:var(--white);grid-column:span 2}
+  .stat.dark .num{font-family:var(--sans);font-size:1rem;letter-spacing:0;font-weight:400}
+  .stat.dark .lbl{color:rgba(255,255,255,.45);margin-top:.5rem;font-size:.82rem;text-transform:none;letter-spacing:0;line-height:1.65}
+  @media(max-width:760px){.hero{grid-template-columns:1fr;padding:5rem 1.5rem 4rem}}
+
+  .marquee-wrap{overflow:hidden;border-top:0.5px solid var(--gray-200);border-bottom:0.5px solid var(--gray-200);padding:.65rem 0;background:var(--off)}
+  .marquee{display:flex;gap:2.5rem;animation:scroll 35s linear infinite;width:max-content}
+  .m-item{font-size:.75rem;color:var(--gray-600);white-space:nowrap;letter-spacing:.06em;text-transform:uppercase}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  .section{max-width:var(--max);margin:0 auto;padding:5rem 2rem}
+  .sec-label{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gray-400);margin-bottom:2.5rem;display:flex;align-items:center;gap:.75rem}
+  .sec-label::after{content:'';flex:1;height:.5px;background:var(--gray-200);max-width:44px}
+  .sec-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-.025em;line-height:1.1;font-weight:400;margin-bottom:.9rem}
+  .sec-sub{font-size:.97rem;color:var(--gray-600);max-width:500px;font-weight:300;line-height:1.8}
+
+  .wf-preview-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-200);border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;margin-top:2.5rem}
+  .wf-mini{background:var(--white);padding:1.5rem;transition:background .15s;cursor:pointer}
+  .wf-mini:hover{background:var(--off)}
+  .wf-mini-cat{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin-bottom:.55rem}
+  .wf-mini h3{font-size:.92rem;font-weight:500;line-height:1.35;margin-bottom:.4rem}
+  .wf-mini p{font-size:.8rem;color:var(--gray-600);line-height:1.55;font-weight:300}
+  .wf-mini .nd{display:inline-block;font-size:.68rem;color:var(--gray-400);border:0.5px solid var(--gray-200);border-radius:100px;padding:.12rem .55rem;margin-top:.7rem}
+  @media(max-width:640px){.wf-preview-grid{grid-template-columns:1fr}}
+
+  /* PORTFOLIO */
+  .port-hero{max-width:var(--max);margin:0 auto;padding:5rem 2rem 3rem}
+  .port-hero h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.025em;font-weight:400;margin-bottom:.75rem}
+  .port-hero p{font-size:.97rem;color:var(--gray-600);font-weight:300;max-width:480px;line-height:1.8}
+  .filter-bar{max-width:var(--max);margin:0 auto;padding:0 2rem 2.5rem;display:flex;gap:.4rem;flex-wrap:wrap}
+  .fb{font-family:var(--sans);font-size:.78rem;padding:.3rem .85rem;border-radius:100px;border:0.5px solid var(--gray-200);background:var(--white);cursor:pointer;transition:all .15s;color:var(--gray-600)}
+  .fb:hover,.fb.active{background:var(--black);color:var(--white);border-color:var(--black)}
+  .port-grid{max-width:var(--max);margin:0 auto;padding:0 2rem 5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1px;background:var(--gray-200);border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden}
+  .wf-card{background:var(--white);padding:1.65rem;transition:background .18s;cursor:default}
+  .wf-card:hover{background:var(--off)}
+  .wf-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.7rem}
+  .cat-badge{font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.18rem .55rem;border-radius:100px}
+  .c-agent{background:#eef0fb;color:#2d3a8c}
+  .c-fintech{background:#fff8e6;color:#8a5f00}
+  .c-content{background:#f0f0f0;color:#444}
+  .c-data{background:#fef0ee;color:#8c2a1a}
+  .c-utility{background:#f5f0fa;color:#5a2d8c}
+  .nodes-b{font-size:.68rem;color:var(--gray-400);background:var(--gray-100);border-radius:100px;padding:.12rem .55rem}
+  .wf-card h3{font-size:.97rem;font-weight:500;line-height:1.35;margin-bottom:.45rem}
+  .wf-card p{font-size:.85rem;color:var(--gray-600);line-height:1.6;font-weight:300}
+  .stack-row{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.9rem}
+  .st{font-size:.68rem;color:var(--gray-600);background:var(--gray-100);border-radius:3px;padding:.12rem .45rem}
+
+  /* ABOUT */
+  .about-wrap{max-width:var(--max);margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1fr 1.45fr;gap:6rem;align-items:start}
+  .av-img{width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center 10%;border:3px solid var(--gray-200);margin-bottom:1.75rem;display:block}
+  .about-left h1{font-family:var(--serif);font-size:1.9rem;letter-spacing:-.02em;font-weight:400;margin-bottom:.4rem}
+  .about-left .role{font-size:.875rem;color:var(--gray-600);margin-bottom:2rem}
+  .detail-row{display:flex;gap:.75rem;font-size:.85rem;margin-bottom:.65rem}
+  .dl{color:var(--gray-400);min-width:68px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;padding-top:.12rem}
+  .dv{color:var(--gray-800);font-weight:300;line-height:1.6}
+  .skill-cloud{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.75rem}
+  .sk{font-size:.78rem;padding:.28rem .75rem;background:var(--gray-100);border-radius:100px;color:var(--gray-800)}
+  .about-photo{width:100%;border-radius:var(--radius-lg);object-fit:cover;object-position:center 15%;display:block;margin-bottom:2rem;max-height:340px}
+  .about-right h2{font-family:var(--serif);font-size:1.7rem;letter-spacing:-.02em;font-weight:400;margin-bottom:1.25rem}
+  .about-right p{font-size:.95rem;color:var(--gray-600);line-height:1.85;margin-bottom:1rem;font-weight:300}
+  .exp-list{margin-top:3rem}
+  .exp-item{display:grid;grid-template-columns:88px 1fr;gap:1.5rem;padding:1.4rem 0;border-top:0.5px solid var(--gray-200)}
+  .exp-item:last-child{border-bottom:0.5px solid var(--gray-200)}
+  .exp-yr{font-size:.78rem;color:var(--gray-400);padding-top:.1rem}
+  .exp-item h4{font-size:.95rem;font-weight:500;margin-bottom:.2rem}
+  .exp-item .co{font-size:.83rem;color:var(--gray-600);margin-bottom:.45rem;font-weight:300}
+  .exp-item p{font-size:.83rem;color:var(--gray-600);font-weight:300;line-height:1.65}
+  @media(max-width:760px){.about-wrap{grid-template-columns:1fr;gap:3rem}.about-photo{max-height:280px}}
+
+  /* CONTACT */
+  .contact-wrap{max-width:660px;margin:0 auto;padding:5rem 2rem}
+  .contact-wrap h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.025em;font-weight:400;margin-bottom:.75rem}
+  .contact-sub{font-size:.97rem;color:var(--gray-600);font-weight:300;line-height:1.8;margin-bottom:3rem}
+  .contact-links{display:flex;flex-direction:column;gap:.5rem;margin-bottom:3rem}
+  .cl{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);text-decoration:none;color:var(--black);transition:all .15s}
+  .cl:hover{border-color:var(--black);background:var(--gray-100)}
+  .cl-icon{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);min-width:60px}
+  .cl-val{font-size:.95rem}
+  .cl-arr{margin-left:auto;color:var(--gray-400)}
+  .cf{display:flex;flex-direction:column;gap:1rem}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .fg{display:flex;flex-direction:column;gap:.35rem}
+  .fg label{font-size:.78rem;color:var(--gray-600);letter-spacing:.02em}
+  .fg input,.fg textarea,.fg select{width:100%;padding:.65rem .95rem;border:0.5px solid var(--gray-200);border-radius:var(--radius);font-family:var(--sans);font-size:.92rem;color:var(--black);background:var(--white);outline:none;transition:border-color .15s;resize:vertical}
+  .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--black)}
+  .fg textarea{min-height:110px}
+  .form-btn{background:var(--black);color:var(--white);border:none;padding:.7rem 2rem;border-radius:100px;font-family:var(--sans);font-size:.88rem;cursor:pointer;transition:opacity .15s;align-self:flex-start}
+  .form-btn:hover{opacity:.8}
+  .form-ok{display:none;padding:.9rem 1.2rem;border-radius:var(--radius);background:var(--green-light);color:var(--green);font-size:.88rem;margin-top:.25rem}
+  @media(max-width:500px){.form-row{grid-template-columns:1fr}}
+
+  footer{border-top:0.5px solid var(--gray-200);padding:1.75rem 2rem;text-align:center}
+  footer p{font-size:.78rem;color:var(--gray-400)}
+  footer a{color:var(--gray-600);text-decoration:none}
+  footer a:hover{color:var(--black)}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  .page.active .anim{animation:fadeUp .45s ease both}
+  .page.active .anim:nth-child(2){animation-delay:.06s}
+  .page.active .anim:nth-child(3){animation-delay:.12s}
+  .page.active .anim:nth-child(4){animation-delay:.18s}
+  ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gray-200)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" onclick="go('home');return false">Ebuka <span>Anulugwo</span></a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="#" onclick="go('home');return false" data-p="home" class="active">Home</a></li>
+      <li><a href="#" onclick="go('portfolio');return false" data-p="portfolio">Portfolio</a></li>
+      <li><a href="#" onclick="go('about');return false" data-p="about">About</a></li>
+      <li><a href="#" onclick="go('contact');return false" data-p="contact" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <img src="IMG_7875.PNG" alt="Ebuka Anulugwo" class="nav-avatar" onclick="go('about');return false" style="cursor:pointer">
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="anim">
+      <h1>AI Automation<br><em>Engineer</em> &amp;<br>Builder</h1>
+      <p class="hero-sub">I design and ship intelligent automation systems — 92 production workflows spanning AI agents, fintech, content pipelines, and business process automation.</p>
+      <div class="hero-btns">
+        <a href="#" class="btn btn-dark" onclick="go('portfolio');return false">View workflows &rarr;</a>
+        <a href="#" class="btn btn-outline" onclick="go('contact');return false">Hire me</a>
+      </div>
+    </div>
+    <div class="hero-stats anim">
+      <div class="stat"><div class="num">92</div><div class="lbl">Production Workflows</div></div>
+      <div class="stat"><div class="num">5+</div><div class="lbl">Domains Covered</div></div>
+      <div class="stat"><div class="num">SOA</div><div class="lbl">Exam P &amp; FM Passed</div></div>
+      <div class="stat dark">
+        <div class="num">Available for remote roles worldwide</div>
+        <div class="lbl">n8n &middot; AI Agents &middot; LLM Integration &middot; API Orchestration &middot; RAG Pipelines &middot; Fintech &middot; Content Automation</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee">
+      <span class="m-item">n8n Automation</span><span class="m-item">&bull;</span>
+      <span class="m-item">AI Agent Design</span><span class="m-item">&bull;</span>
+      <span class="m-item">RAG Pipelines</span><span class="m-item">&bull;</span>
+      <span class="m-item">LLM Integration</span><span class="m-item">&bull;</span>
+      <span class="m-item">API Orchestration</span><span class="m-item">&bull;</span>
+      <span class="m-item">Fintech Automation</span><span class="m-item">&bull;</span>
+      <span class="m-item">Mem0 Memory Layer</span><span class="m-item">&bull;</span>
+      <span class="m-item">Multi-Agent Systems</span><span class="m-item">&bull;</span>
+      <span class="m-item">Content Pipelines</span><span class="m-item">&bull;</span>
+      <span class="m-item">Telegram Bots</span><span class="m-item">&bull;</span>
+      <span class="m-item">WhatsApp API</span><span class="m-item">&bull;</span>
+      <span class="m-item">DeFi Automation</span><span class="m-item">&bull;</span>
+      <span class="m-item">n8n Automation</span><span class="m-item">&bull;</span>
+      <span class="m-item">AI Agent Design</span><span class="m-item">&bull;</span>
+      <span class="m-item">RAG Pipelines</span><span class="m-item">&bull;</span>
+      <span class="m-item">LLM Integration</span><span class="m-item">&bull;</span>
+      <span class="m-item">API Orchestration</span><span class="m-item">&bull;</span>
+      <span class="m-item">Fintech Automation</span><span class="m-item">&bull;</span>
+      <span class="m-item">Mem0 Memory Layer</span><span class="m-item">&bull;</span>
+      <span class="m-item">Multi-Agent Systems</span><span class="m-item">&bull;</span>
+      <span class="m-item">Content Pipelines</span><span class="m-item">&bull;</span>
+      <span class="m-item">Telegram Bots</span><span class="m-item">&bull;</span>
+      <span class="m-item">WhatsApp API</span><span class="m-item">&bull;</span>
+      <span class="m-item">DeFi Automation</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-label anim">Featured Work</div>
+    <h2 class="sec-title anim">Workflows that ship real value</h2>
+    <p class="sec-sub anim">A selection of the most complex and commercially relevant systems — independently designed, built, and deployed.</p>
+    <div class="wf-preview-grid anim">
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">AI Agent</div>
+        <h3>Aurelius Customer Support Agent v2</h3>
+        <p>Full-stack AI support with memory, routing, and escalation logic.</p>
+        <span class="nd">78 nodes</span>
+      </div>
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">Content AI</div>
+        <h3>Multi-Platform Social Media Factory</h3>
+        <p>AI content generation and publishing across 6+ platforms simultaneously.</p>
+        <span class="nd">57 nodes</span>
+      </div>
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">Fintech</div>
+        <h3>LI.FI Autonomous Capital Manager</h3>
+        <p>Autonomous DeFi capital management with cross-chain execution.</p>
+        <span class="nd">24 nodes</span>
+      </div>
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">Video AI</div>
+        <h3>AI Viral Video Generator</h3>
+        <p>Script to published video — end-to-end pipeline automation.</p>
+        <span class="nd">40 nodes</span>
+      </div>
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">Conversational AI</div>
+        <h3>WhatsApp AI Assistant</h3>
+        <p>Multimodal assistant — text, voice, images, and PDFs via WhatsApp.</p>
+        <span class="nd">32 nodes</span>
+      </div>
+      <div class="wf-mini" onclick="go('portfolio')">
+        <div class="wf-mini-cat">Data &amp; BI</div>
+        <h3>AI Data Analyst — Chat with DB</h3>
+        <p>Natural language database querying with AI SQL generation.</p>
+        <span class="nd">31 nodes</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="#" class="btn btn-outline" onclick="go('portfolio');return false">View all 92 workflows &rarr;</a>
+    </div>
+  </div>
+
+  <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwu@gmail.com">eanulugwu@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
+</div>
+
+<!-- PORTFOLIO -->
+<div class="page" id="page-portfolio">
+  <div class="port-hero">
+    <div class="sec-label anim">Portfolio</div>
+    <h1 class="anim">92 Production Workflows</h1>
+    <p class="anim">Every workflow below was independently designed, built, and deployed — no team, no formal training programme. Just building.</p>
+  </div>
+  <div class="filter-bar anim" id="filter-bar">
+    <button class="fb active" data-f="all">All</button>
+    <button class="fb" data-f="agent">AI Agents</button>
+    <button class="fb" data-f="fintech">Fintech</button>
+    <button class="fb" data-f="content">Content</button>
+    <button class="fb" data-f="data">Data &amp; BI</button>
+    <button class="fb" data-f="utility">Utility</button>
+  </div>
+  <div class="port-grid anim" id="port-grid"></div>
+  <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwu@gmail.com">eanulugwu@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
+</div>
+
+<!-- ABOUT -->
+<div class="page" id="page-about">
+  <div class="about-wrap">
+    <div class="anim">
+      <img src="IMG_7875.PNG" alt="Ebuka Anulugwo" class="av-img">
+      <h1>Ebuka Anulugwo</h1>
+      <p class="role">AI Automation Engineer &middot; Lagos, Nigeria</p>
+      <div>
+        <div class="detail-row"><span class="dl">Email</span><span class="dv">eanulugwu@gmail.com</span></div>
+        <div class="detail-row"><span class="dl">Phone</span><span class="dv">+234 807 356 4384</span></div>
+        <div class="detail-row"><span class="dl">Location</span><span class="dv">Lagos, Nigeria</span></div>
+        <div class="detail-row"><span class="dl">Open to</span><span class="dv">Remote roles worldwide &middot; Available now</span></div>
+        <div class="detail-row"><span class="dl">Education</span><span class="dv">BSc Actuarial Science, First Class &mdash; University of Lagos, 2024</span></div>
+        <div class="detail-row"><span class="dl">Exams</span><span class="dv">SOA Exam P &amp; FM passed &middot; SRM in progress</span></div>
+      </div>
+      <div class="skill-cloud">
+        <span class="sk">n8n</span><span class="sk">AI Agents</span><span class="sk">RAG Pipelines</span>
+        <span class="sk">LLM Integration</span><span class="sk">API Orchestration</span><span class="sk">Mem0</span>
+        <span class="sk">Telegram API</span><span class="sk">WhatsApp API</span><span class="sk">Solana / DeFi</span>
+        <span class="sk">ElevenLabs</span><span class="sk">Supabase</span><span class="sk">PostgreSQL</span>
+        <span class="sk">Pinecone</span><span class="sk">Google Workspace</span><span class="sk">SQL</span>
+      </div>
+    </div>
+    <div class="anim">
+      <img src="image (4).jpg" alt="Ebuka Anulugwo" class="about-photo">
+      <h2>I build AI systems that actually ship.</h2>
+      <p>I'm a first-class Actuarial Science graduate from the University of Lagos who taught himself AI automation by simply building things. No bootcamp, no team — just identifying problems and wiring up solutions.</p>
+      <p>Over the past year I've independently built 92 production-grade n8n workflows spanning multi-agent AI, fintech trading bots, RAG pipelines, content factories, and business process automation. Each one is a real system solving a real problem.</p>
+      <p>I combine rigorous quantitative thinking with the practical instinct of someone who ships. I don't wait for perfect specs — I understand the messy business process, ask the right questions, and build something reliable.</p>
+      <p>Currently open to remote roles in AI Automation Engineering, and consulting for businesses that want to replace manual work with intelligent systems.</p>
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-yr">2025</div>
+          <div><h4>Quality Assurance Specialist</h4><p class="co">Evolutics Technology &middot; Lagos</p><p>End-to-end QA testing on 10+ products. Bug tracking, spec review, and cross-team collaboration with developers and product teams.</p></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">2024</div>
+          <div><h4>Grant Manager — Corporate Finance Intern</h4><p class="co">Grovane Advisory Firms &middot; Lagos</p><p>Secured funding for clients through strategic grant applications. Structured document pipelines experience fed directly into automation design.</p></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">2022</div>
+          <div><h4>Teacher</h4><p class="co">Brightest Stars Schools &middot; Lagos</p><p>Delivered structured lessons across multiple subjects to 25 students, identifying and addressing individual learning gaps.</p></div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-yr">2017</div>
+          <div><h4>Vice President</h4><p class="co">Interact Club Association (ICA)</p><p>Led 45+ students, drove 33% membership growth, and organised competitions and knowledge sessions.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwu@gmail.com">eanulugwu@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="sec-label anim">Contact</div>
+    <h1 class="anim">Let's build something.</h1>
+    <p class="contact-sub anim">Open to remote roles in AI Automation Engineering, freelance projects, and consulting for businesses that want to replace manual work with intelligent systems.</p>
+    <div class="contact-links anim">
+      <a href="mailto:eanulugwu@gmail.com" class="cl">
+        <span class="cl-icon">Email</span><span class="cl-val">eanulugwu@gmail.com</span><span class="cl-arr">&rarr;</span>
+      </a>
+      <a href="tel:+2348073564384" class="cl">
+        <span class="cl-icon">Phone</span><span class="cl-val">+234 807 356 4384</span><span class="cl-arr">&rarr;</span>
+      </a>
+      <a href="https://linkedin.com/in/ebuka-anulugwo" target="_blank" class="cl">
+        <span class="cl-icon">LinkedIn</span><span class="cl-val">linkedin.com/in/ebuka-anulugwo</span><span class="cl-arr">&rarr;</span>
+      </a>
+    </div>
+    <p style="font-size:.85rem;color:var(--gray-600);margin-bottom:1.25rem;font-weight:300">Or send a message directly:</p>
+    <form class="cf anim" onsubmit="handleForm(event)">
+      <div class="form-row">
+        <div class="fg"><label>Name</label><input type="text" placeholder="Your name" required></div>
+        <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
+      </div>
+      <div class="fg">
+        <label>Topic</label>
+        <select>
+          <option value="">Select a topic</option>
+          <option>Full-time remote role</option>
+          <option>Freelance / consulting project</option>
+          <option>Collaboration</option>
+          <option>General enquiry</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell me about the project or role..."></textarea></div>
+      <button type="submit" class="form-btn">Send message</button>
+      <div class="form-ok" id="form-ok">Message sent! I'll get back to you within 24 hours.</div>
+    </form>
+  </div>
+  <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwu@gmail.com">eanulugwu@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
+</div>
+
+<script>
+const WF = [
+  {t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full-stack AI support with conversation memory, intent routing, and escalation logic.",s:["n8n","Claude","Supabase","Gmail"]},
+  {t:"Multi-Platform Social Media Factory",c:"content",cl:"Content AI",n:57,d:"AI content generation and auto-publishing across 6 platforms simultaneously.",s:["n8n","Claude","Buffer","6+ APIs"]},
+  {t:"Reddit Job Hunter v2",c:"utility",cl:"Utility",n:44,d:"AI-powered job monitor scanning Reddit for opportunities in real time.",s:["n8n","Claude","Reddit API"]},
+  {t:"Viral TikTok Cloner — 9 Platform Publisher",c:"content",cl:"Content AI",n:41,d:"AI avatar video cloning with voice synthesis across 9 social platforms.",s:["n8n","HeyGen","ElevenLabs"]},
+  {t:"AI Viral Video Generator",c:"content",cl:"Content AI",n:40,d:"Script to published video — end-to-end pipeline with AI and FFmpeg.",s:["n8n","Claude","FFmpeg","YouTube"]},
+  {t:"WhatsApp AI Assistant",c:"agent",cl:"AI Agent",n:32,d:"Multimodal assistant handling text, voice, images, and PDFs via WhatsApp.",s:["n8n","Claude","WhatsApp API"]},
+  {t:"AI Data Analyst — Chat with Database",c:"data",cl:"Data & BI",n:31,d:"Natural language to SQL — query any database via conversational AI.",s:["n8n","Claude","PostgreSQL"]},
+  {t:"BETRAYAL Series — Full Video Pipeline",c:"content",cl:"Content AI",n:120,d:"YouTube documentary pipeline: Reddit sourcing → script → voiceover → upload → analytics.",s:["n8n","Claude","ElevenLabs","YouTube"]},
+  {t:"LI.FI Autonomous Capital Manager",c:"fintech",cl:"Fintech",n:24,d:"Autonomous DeFi capital management with cross-chain swaps and P&L alerts.",s:["n8n","LI.FI API","Solana","Telegram"]},
+  {t:"AI Tech Newsletter — RSS + Gmail",c:"utility",cl:"Utility",n:24,d:"RSS ingestion → AI curation and writing → formatted Gmail delivery.",s:["n8n","Claude","RSS","Gmail"]},
+  {t:"Mentorable Telegram Approval Bot",c:"utility",cl:"Utility",n:22,d:"Multi-stage content approval with Telegram-based human-in-the-loop.",s:["n8n","Telegram","Claude"]},
+  {t:"ARIA — AI Life Coach (Mem0 Memory)",c:"agent",cl:"AI Agent",n:21,d:"Persistent memory coaching agent with long-term context retention.",s:["n8n","Claude","Mem0","Google Sheets"]},
+  {t:"Solana Master Trader",c:"fintech",cl:"Fintech",n:21,d:"Automated Solana trading with signal detection and trade logging.",s:["n8n","Solana RPC","Jupiter"]},
+  {t:"Pain Point Radar — Reddit & X Monitor",c:"data",cl:"Data & BI",n:36,d:"Real-time social listening for customer pain points and market signals.",s:["n8n","Reddit API","X API","Claude"]},
+  {t:"RAG Chatbot — Google Drive KB",c:"agent",cl:"AI Agent",n:18,d:"RAG-powered chatbot grounded in Google Drive documents.",s:["n8n","Claude","Google Drive","Pinecone"]},
+  {t:"Autonomous Business Assistant + Mem0",c:"agent",cl:"AI Agent",n:19,d:"Persistent memory assistant executing multi-step business tasks.",s:["n8n","Claude","Mem0","Telegram"]},
+  {t:"Business Intelligence Pipeline",c:"data",cl:"Data & BI",n:20,d:"Automated company analysis → AI insight → structured competitive report.",s:["n8n","Claude","Apify","Sheets"]},
+  {t:"Telegram Report Generator v2",c:"data",cl:"Data & BI",n:18,d:"Automated formatted data reports delivered to Telegram on schedule.",s:["n8n","Claude","Google Sheets","Telegram"]},
+  {t:"LI.FI Autonomous Capital Chat",c:"fintech",cl:"Fintech",n:18,d:"Conversational DeFi agent — portfolio queries and swap execution.",s:["n8n","Claude","LI.FI","Telegram"]},
+  {t:"Memecoin Position Monitor",c:"fintech",cl:"Fintech",n:15,d:"Real-time memecoin position tracking with automated price alerts.",s:["n8n","Solana","Telegram"]},
+  {t:"African Stories — Cinematic AI Channel",c:"content",cl:"Content AI",n:20,d:"Automated storytelling YouTube channel — ideation to upload.",s:["n8n","Claude","ElevenLabs","YouTube"]},
+  {t:"AI Form Response Analyzer",c:"utility",cl:"Utility",n:6,d:"AI scores form submissions, extracts insights, populates Google Sheets.",s:["n8n","Claude","Google Forms"]},
+  {t:"Smart Email Formatter",c:"utility",cl:"Utility",n:7,d:"AI reformats emails for tone and professionalism before sending.",s:["n8n","Claude","Gmail"]},
+  {t:"X Auto Poster — Every 3 Hours",c:"content",cl:"Content AI",n:8,d:"Fully automated AI tweet generation and scheduling system.",s:["n8n","Claude","X API"]},
+  {t:"AI Contract Generator",c:"utility",cl:"Utility",n:7,d:"Generates contracts from form inputs → Google Docs → PDF email.",s:["n8n","Claude","Google Docs","Gmail"]},
+  {t:"Smart Onboarding System",c:"agent",cl:"AI Agent",n:15,d:"Automated client onboarding: intake → personalisation → contract → welcome.",s:["n8n","Claude","Gmail","Notion"]},
+  {t:"LI.FI Daily P&L Summary",c:"fintech",cl:"Fintech",n:6,d:"Daily DeFi P&L calculation across positions with Telegram delivery.",s:["n8n","LI.FI API","Telegram"]},
+  {t:"Superteam Earn Bounty Monitor",c:"utility",cl:"Utility",n:6,d:"Scrapes Superteam for new bounties → instant email and Telegram alerts.",s:["n8n","Apify","Gmail","Telegram"]},
+  {t:"YouTube Content & Channel Manager",c:"content",cl:"Content AI",n:12,d:"AI managing channel strategy, content planning, and performance tracking.",s:["n8n","Claude","YouTube API"]},
+  {t:"Credential Classifier Agent",c:"agent",cl:"AI Agent",n:7,d:"AI scores and validates form submissions for credibility and quality.",s:["n8n","Claude","Google Forms"]},
+];
+
+function renderGrid(f){
+  const items = f==='all' ? WF : WF.filter(w=>w.c===f);
+  document.getElementById('port-grid').innerHTML = items.map(w=>`
+    <div class="wf-card">
+      <div class="wf-card-top">
+        <span class="cat-badge c-${w.c}">${w.cl}</span>
+        <span class="nodes-b">${w.n} nodes</span>
+      </div>
+      <h3>${w.t}</h3>
+      <p>${w.d}</p>
+      <div class="stack-row">${w.s.map(s=>`<span class="st">${s}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+document.getElementById('filter-bar').addEventListener('click',e=>{
+  if(!e.target.classList.contains('fb')) return;
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderGrid(e.target.dataset.f);
+});
+
+renderGrid('all');
+
+function go(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('[data-p]').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('[data-p="'+name+'"]').forEach(a=>a.classList.add('active'));
+  document.querySelector('.nav-links').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function handleForm(e){
+  e.preventDefault();
+  const ok=document.getElementById('form-ok');
+  const btn=e.target.querySelector('.form-btn');
+  ok.style.display='block';
+  btn.textContent='Sent!';
+  setTimeout(()=>{ok.style.display='none';btn.textContent='Send message';e.target.reset();},4000);
+}
+</script>
+</body>
+</html>
