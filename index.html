@@ -155,6 +155,35 @@
   .page.active .anim:nth-child(3){animation-delay:.12s}
   .page.active .anim:nth-child(4){animation-delay:.18s}
   ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--gray-200)}
+
+  /* DEMO MODAL */
+  .demo-btn{display:inline-flex;align-items:center;gap:.35rem;margin-top:.85rem;font-family:var(--sans);font-size:.78rem;padding:.38rem .9rem;border-radius:100px;background:var(--black);color:var(--white);border:none;cursor:pointer;transition:opacity .15s}
+  .demo-btn:hover{opacity:.75}
+  .demo-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;display:none;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(6px)}
+  .demo-modal-overlay.open{display:flex}
+  .demo-modal{background:var(--white);border-radius:var(--radius-lg);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;padding:2.5rem;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.18)}
+  .demo-close{position:absolute;top:1.25rem;right:1.25rem;background:var(--gray-100);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;color:var(--gray-600);transition:all .15s;line-height:1}
+  .demo-close:hover{background:var(--gray-200);color:var(--black)}
+  .demo-modal-badge{margin-bottom:.9rem}
+  .demo-modal h2{font-family:var(--serif);font-size:1.7rem;letter-spacing:-.02em;font-weight:400;margin-bottom:.3rem}
+  .demo-modal-meta{font-size:.8rem;color:var(--gray-400);margin-bottom:2rem}
+  .demo-flow{display:flex;align-items:center;overflow-x:auto;padding:.5rem 0 1.25rem;margin-bottom:2rem;scrollbar-width:none;gap:0}
+  .demo-flow::-webkit-scrollbar{display:none}
+  .flow-node{background:var(--gray-100);border:0.5px solid var(--gray-200);border-radius:var(--radius);padding:.45rem .8rem;font-size:.72rem;font-weight:500;white-space:nowrap;color:var(--gray-800);flex-shrink:0}
+  .flow-node.first{background:var(--black);color:var(--white);border-color:var(--black)}
+  .flow-node.last{background:#eef7f1;color:#1a5c2e;border-color:rgba(26,92,46,.2)}
+  .flow-arrow{color:var(--gray-300);font-size:.75rem;padding:0 .35rem;flex-shrink:0}
+  .demo-steps{display:flex;flex-direction:column;margin-bottom:2rem}
+  .demo-step{display:grid;grid-template-columns:40px 1fr;gap:1rem;padding:1.1rem 0;border-top:.5px solid var(--gray-200)}
+  .demo-step:last-child{border-bottom:.5px solid var(--gray-200)}
+  .step-icon{width:36px;height:36px;background:var(--gray-100);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;margin-top:.1rem}
+  .step-title{font-size:.88rem;font-weight:500;margin-bottom:.25rem}
+  .step-desc{font-size:.82rem;color:var(--gray-600);line-height:1.7;font-weight:300}
+  .demo-video{background:var(--gray-100);border:.5px solid var(--gray-200);border-radius:var(--radius-lg);padding:2.5rem;text-align:center}
+  .demo-video .vid-icon{font-size:2rem;margin-bottom:.65rem}
+  .demo-video strong{display:block;font-size:.9rem;font-weight:500;color:var(--gray-800);margin-bottom:.35rem}
+  .demo-video p{font-size:.82rem;color:var(--gray-400);font-weight:300;line-height:1.65}
+  @media(max-width:600px){.demo-modal{padding:1.5rem}.demo-modal h2{font-size:1.35rem}}
 </style>
 </head>
 <body>
@@ -389,6 +418,14 @@
   <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwo@gmail.com">eanulugwo@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
 </div>
 
+<!-- DEMO MODAL -->
+<div class="demo-modal-overlay" id="demo-overlay" onclick="closeDemoModal(event)">
+  <div class="demo-modal" id="demo-modal">
+    <button class="demo-close" onclick="closeDemoModal(null,true)">&#x2715;</button>
+    <div id="demo-modal-content"></div>
+  </div>
+</div>
+
 <script>
 const WF = [
   {t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full-stack AI support with conversation memory, intent routing, and escalation logic.",s:["n8n","Claude","Supabase","Gmail"]},
@@ -434,6 +471,7 @@ function renderGrid(f){
       <h3>${w.t}</h3>
       <p>${w.d}</p>
       <div class="stack-row">${w.s.map(s=>`<span class="st">${s}</span>`).join('')}</div>
+      ${DEMOS[w.t]?`<button class="demo-btn" onclick="openDemoModal('${w.t.replace(/'/g,"\\'")}')" >View demo &rarr;</button>`:''}
     </div>
   `).join('');
 }
@@ -455,6 +493,80 @@ function go(name){
   document.querySelector('.nav-links').classList.remove('open');
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+const DEMOS = {
+  "Aurelius Customer Support Agent v2":{
+    badge:"AI Agent",bc:"c-agent",nodes:78,
+    flow:["Telegram Trigger","Intent Router","Department Agent","Process & Fetch","Build Response","Audit + Reply"],
+    steps:[
+      {i:"📨",t:"Client Sends Telegram Message",d:"Any incoming Telegram message kicks off the workflow. The system strips metadata and checks conversation history before doing anything else."},
+      {i:"🧠",t:"Intent Routing Agent (Claude)",d:"Claude AI reads the message and intelligently routes it to the correct department — Finance, Projects, KYC, or Communications — with no human input needed."},
+      {i:"🏦",t:"Finance Department",d:"Handles invoice queries, payment receipts, and financial summaries. Pulls live data from records and drafts a precise, professional finance response."},
+      {i:"📁",t:"Projects Department",d:"Tracks project status, updates registries, creates weekly digest reports, and manages onboarding documents automatically."},
+      {i:"📬",t:"Communications Department",d:"Drafts and sends professional emails on behalf of clients, including sourcing and attaching files when required."},
+      {i:"📊",t:"Audit Logging & Telegram Reply",d:"Every response is quality-checked, sanitised, logged to a permanent audit trail, then delivered back to the client via Telegram."}
+    ]
+  },
+  "Smart Onboarding System":{
+    badge:"AI Agent",bc:"c-agent",nodes:15,
+    flow:["Chat / Telegram / Form","GPT-4o Agent","Add to CRM","Create Drive Folder","Welcome Email","Slack Notification"],
+    steps:[
+      {i:"🚪",t:"3 Entry Points — One Flow",d:"Clients can submit via Chat UI, Telegram message, or Web Form. All three routes trigger the same unified onboarding pipeline automatically."},
+      {i:"🤖",t:"GPT-4o Agent + Session Memory",d:"The Smart Onboarding Agent, powered by GPT-4o, processes the client submission with persistent memory so context is never lost across messages."},
+      {i:"📋",t:"Add Client to CRM",d:"Client details are automatically appended to a Google Sheets CRM. Zero manual data entry — the row is there before you even refresh the sheet."},
+      {i:"📁",t:"Create Google Drive Folder",d:"A dedicated, organised client folder is instantly created in Google Drive, ready for contracts, briefs, and deliverables."},
+      {i:"📧",t:"Send Personalised Welcome Email",d:"A tailored welcome email is sent to the new client via Gmail the moment onboarding completes — no delay, no templates to fill in."},
+      {i:"💬",t:"Notify Team on Slack",d:"The internal team gets an instant Slack ping with full client details so everyone is aligned from day one without a single manual message."}
+    ]
+  },
+  "Reddit Job Hunter v2":{
+    badge:"Utility",bc:"c-utility",nodes:44,
+    flow:["Schedule Trigger","40+ Subreddits","Claude AI Analysis","Deduplicate + Filter","Log to Sheets","Email Digest"],
+    steps:[
+      {i:"⏰",t:"Runs Every 6 Hours, Automatically",d:"The workflow fires on a schedule every 6 hours — no manual triggering. It monitors opportunities around the clock so you never miss a post."},
+      {i:"🔍",t:"Scrapes 40+ Subreddits in Parallel",d:"Simultaneously pulls fresh posts from 40+ subreddits — r/AI, r/Freelance, r/Design, r/QA, r/Crypto, and more — all in a single execution."},
+      {i:"🤖",t:"Claude AI Scores Every Post",d:"Each post is analysed by Claude AI for relevance, fit quality, and key details — turning raw Reddit noise into prioritised signal."},
+      {i:"🔄",t:"Deduplicate & Quality Filter",d:"Posts you've already seen are automatically removed. Low-quality, irrelevant, or spam posts are filtered out before anything reaches your inbox."},
+      {i:"📊",t:"Log All Leads to Google Sheets",d:"Every qualifying opportunity is logged to a structured Google Sheets tracker with title, subreddit, score, and link — ready for follow-up."},
+      {i:"📧",t:"Email Digest Delivered to Inbox",d:"A clean, formatted digest of the best opportunities is sent straight to your email — actionable intelligence, zero manual effort."}
+    ]
+  }
+};
+
+function openDemoModal(title){
+  const d=DEMOS[title];
+  if(!d)return;
+  document.getElementById('demo-modal-content').innerHTML=`
+    <span class="cat-badge ${d.bc} demo-modal-badge">${d.badge}</span>
+    <h2>${title}</h2>
+    <p class="demo-modal-meta">${d.nodes} nodes &middot; n8n workflow</p>
+    <div class="demo-flow">
+      ${d.flow.map((n,i)=>`${i>0?'<span class="flow-arrow">&#8594;</span>':''}<div class="flow-node ${i===0?'first':i===d.flow.length-1?'last':''}">${n}</div>`).join('')}
+    </div>
+    <div class="demo-steps">
+      ${d.steps.map((s,i)=>`
+        <div class="demo-step">
+          <div class="step-icon">${s.i}</div>
+          <div><div class="step-title">Step ${i+1} &mdash; ${s.t}</div><div class="step-desc">${s.d}</div></div>
+        </div>`).join('')}
+    </div>
+    <div class="demo-video">
+      <div class="vid-icon">🎬</div>
+      <strong>Demo video coming soon</strong>
+      <p>A full live walkthrough of this workflow in action will be added here.</p>
+    </div>`;
+  document.getElementById('demo-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeDemoModal(e,force){
+  if(force||(e&&e.target===document.getElementById('demo-overlay'))){
+    document.getElementById('demo-overlay').classList.remove('open');
+    document.body.style.overflow='';
+  }
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDemoModal(null,true);});
 
 function handleForm(e){
   e.preventDefault();
