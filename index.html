@@ -47,16 +47,14 @@
   .btn-dark:hover{opacity:.8}
   .btn-outline{background:transparent;color:var(--black);border:0.5px solid var(--gray-400)}
   .btn-outline:hover{border-color:var(--black);background:var(--gray-100)}
-  .hero-img-wrap{width:100%;max-width:420px;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:var(--gray-100);margin:0 auto;border:4px solid var(--gray-200)}
-  .hero-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center 8%;display:block}
-  .stats-strip{max-width:var(--max);margin:0 auto;padding:0 2rem 4rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--gray-200);border:0.5px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden}
-  .stat{background:var(--gray-100);padding:1.5rem;border:none}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+  .stat{background:var(--gray-100);border-radius:var(--radius-lg);padding:1.5rem;border:0.5px solid var(--gray-200)}
   .stat .num{font-family:var(--serif);font-size:2.8rem;line-height:1;letter-spacing:-.03em;margin-bottom:.3rem}
   .stat .lbl{font-size:.75rem;color:var(--gray-600);letter-spacing:.04em;text-transform:uppercase}
-  .stat.dark{background:var(--black);color:var(--white)}
-  .stat.dark .num{font-family:var(--sans);font-size:.95rem;letter-spacing:0;font-weight:400;line-height:1.5}
-  .stat.dark .lbl{color:rgba(255,255,255,.45);margin-top:.4rem;font-size:.78rem;text-transform:none;letter-spacing:0;line-height:1.6}
-  @media(max-width:760px){.hero{grid-template-columns:1fr;padding:5rem 1.5rem 3rem}.stats-strip{grid-template-columns:1fr 1fr}.stat.dark{grid-column:span 2}}
+  .stat.dark{background:var(--black);color:var(--white);grid-column:span 2}
+  .stat.dark .num{font-family:var(--sans);font-size:1rem;letter-spacing:0;font-weight:400}
+  .stat.dark .lbl{color:rgba(255,255,255,.45);margin-top:.5rem;font-size:.82rem;text-transform:none;letter-spacing:0;line-height:1.65}
+  @media(max-width:760px){.hero{grid-template-columns:1fr;padding:5rem 1.5rem 4rem}}
 
   .marquee-wrap{overflow:hidden;border-top:0.5px solid var(--gray-200);border-bottom:0.5px solid var(--gray-200);padding:.65rem 0;background:var(--off)}
   .marquee{display:flex;gap:2.5rem;animation:scroll 35s linear infinite;width:max-content}
@@ -186,18 +184,14 @@
         <a href="#" class="btn btn-outline" onclick="go('contact');return false">Hire me</a>
       </div>
     </div>
-    <div class="hero-img-wrap anim">
-      <img src="IMG_7875.PNG" alt="Ebuka Anulugwo">
-    </div>
-  </div>
-
-  <div class="stats-strip anim">
-    <div class="stat"><div class="num">92</div><div class="lbl">Production Workflows</div></div>
-    <div class="stat"><div class="num">5+</div><div class="lbl">Domains Covered</div></div>
-    <div class="stat"><div class="num">SOA</div><div class="lbl">Exam P &amp; FM Passed</div></div>
-    <div class="stat dark">
-      <div class="num">Available for remote roles worldwide</div>
-      <div class="lbl">n8n &middot; AI Agents &middot; LLM Integration &middot; API Orchestration &middot; RAG Pipelines &middot; Fintech &middot; Content Automation</div>
+    <div class="hero-stats anim">
+      <div class="stat"><div class="num">92</div><div class="lbl">Production Workflows</div></div>
+      <div class="stat"><div class="num">5+</div><div class="lbl">Domains Covered</div></div>
+      <div class="stat"><div class="num">SOA</div><div class="lbl">Exam P &amp; FM Passed</div></div>
+      <div class="stat dark">
+        <div class="num">Available for remote roles worldwide</div>
+        <div class="lbl">n8n &middot; AI Agents &middot; LLM Integration &middot; API Orchestration &middot; RAG Pipelines &middot; Fintech &middot; Content Automation</div>
+      </div>
     </div>
   </div>
 
