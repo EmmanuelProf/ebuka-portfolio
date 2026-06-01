@@ -354,7 +354,7 @@ footer a:hover{color:var(--text)}
         </div>
         <h3>Aurelius Customer Support Agent v2</h3>
         <p>Full AI support system with persistent memory, intent routing, and human escalation. Live on Telegram &amp; WhatsApp.</p>
-        <div class="stack-row"><span class="st">n8n</span><span class="st">Mem0</span><span class="st">Telegram</span><span class="st">WhatsApp</span><span class="st">OpenRouter</span></div>
+        <div class="stack-row"><span class="st">n8n</span><span class="st">Mem0</span><span class="st">Telegram</span><span class="st">OpenAI</span><span class="st">OpenRouter</span><span class="st">Google Sheets</span><span class="st">Google Drive</span><span class="st">Gmail</span></div>
       </div>
       <div class="wf-card">
         <div class="wf-card-bg"><img src="workflow-screenshots/social-factory.png" alt=""><div class="wf-card-bg-overlay"></div></div>
@@ -707,7 +707,7 @@ footer a:hover{color:var(--text)}
 
 <script>
 const PORTFOLIO = [
-  {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram & WhatsApp",s:["n8n","Mem0","Telegram","WhatsApp","OpenRouter"],img:"workflow-screenshots/aurelius.png",
+  {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram & WhatsApp",s:["n8n","Mem0","Telegram","OpenAI","OpenRouter","Google Sheets","Google Drive","Google Docs","Gmail"],img:"workflow-screenshots/aurelius.png",
    story:["I had been watching support teams copy-paste the same responses over and over. The real problem wasn't volume — it was the complete loss of context. Every new message started from zero, as if the customer had never spoken to the business before. That's what I set out to fix.","The memory architecture was the hardest part. Querying Mem0 before every response and writing back after — without adding noticeable latency — required careful sequencing. The workflow queries memory and the incoming message in parallel, merges both into the prompt context, then Claude generates the response. The order matters.","The 78 nodes aren't complexity for its own sake. Each one handles a real edge case: voice note transcription, image handling, intent misclassification fallbacks, escalation timing, dual-channel routing between Telegram and WhatsApp. The escalation logic specifically — packaging the full conversation history plus memory summary and a suggested resolution before handing off to a human — took about two days to get right.","It runs without intervention. That was the point."]},
 
   {slug:"social-factory",t:"Multi-Platform Social Media Factory",c:"content",cl:"Content AI",n:57,d:"AI content generation + publish across 6+ platforms simultaneously",s:["n8n","Claude","GPT","YouTube","Reddit"],img:"workflow-screenshots/social-factory.png",
