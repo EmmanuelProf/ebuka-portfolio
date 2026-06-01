@@ -221,7 +221,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 
 /* CARD READ INDICATOR */
 .wf-card.has-story{cursor:pointer}
-.wf-card-read{position:absolute;bottom:-44px;left:0;right:0;padding:.7rem 1.5rem .55rem;background:linear-gradient(to top,rgba(59,130,246,.95),rgba(59,130,246,.6) 70%,transparent);font-family:var(--mono);font-size:.68rem;color:#fff;display:flex;align-items:center;justify-content:space-between;transition:bottom .28s ease;z-index:3;pointer-events:none;letter-spacing:.03em}
+.wf-card-read{position:absolute;bottom:-44px;left:0;right:0;padding:.65rem 1.5rem .5rem;background:linear-gradient(to top,rgba(13,17,23,.97),rgba(13,17,23,.7) 70%,transparent);font-family:var(--mono);font-size:.68rem;color:var(--blue);display:flex;align-items:center;justify-content:space-between;transition:bottom .28s ease;z-index:3;pointer-events:none;letter-spacing:.05em;text-transform:uppercase}
 .wf-card.has-story:hover .wf-card-read{bottom:0}
 .wf-card.has-story:hover{outline:1px solid rgba(59,130,246,.4)}
 
@@ -232,13 +232,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 .wf-detail-banner-content{position:absolute;bottom:0;left:0;right:0;padding:2.5rem 2rem;max-width:var(--max);margin:0 auto;width:100%}
 .wf-detail-banner-content h1{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.85rem;line-height:1.1}
 .wf-detail-body{max-width:740px;margin:0 auto;padding:2.5rem 2rem 5rem}
-.wf-detail-back{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;color:var(--text-2);cursor:pointer;margin-bottom:2.5rem;transition:color .15s;background:none;border:none;padding:0}
+.wf-detail-back{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;color:var(--text-2);cursor:pointer;margin-bottom:2rem;transition:color .15s;background:none;border:none;padding:0}
 .wf-detail-back:hover{color:var(--blue)}
+.wf-detail-tools{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;margin-bottom:2.5rem}
+.wf-detail-tools-label{font-family:var(--mono);font-size:.62rem;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1rem}
+.wf-detail-tools-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.wf-tool{font-family:var(--mono);font-size:.8rem;color:var(--text);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:.38rem .9rem;letter-spacing:.01em}
 .wf-detail-divider{height:1px;background:var(--border-subtle);margin:0 0 2.5rem}
 .wf-detail-story p{font-size:.97rem;color:var(--text-2);line-height:1.95;margin-bottom:1.3rem;font-weight:300}
 .wf-detail-story p:first-child{font-size:1.05rem;color:var(--text);font-weight:400}
 .wf-detail-story p:last-child{margin-bottom:0}
-.wf-detail-section-label{font-family:var(--mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.09em;text-transform:uppercase;margin-bottom:.75rem;margin-top:2.5rem}
 @media(max-width:640px){.wf-detail-banner{height:260px}.wf-detail-banner-content{padding:1.5rem}}
 
 footer{border-top:1px solid var(--border-subtle);padding:1.75rem 2rem;text-align:center}
@@ -688,11 +691,14 @@ footer a:hover{color:var(--text)}
     <div class="wf-detail-banner-content">
       <div id="wf-detail-top" class="wf-card-top" style="margin-bottom:.85rem;position:relative;z-index:1"></div>
       <h1 id="wf-detail-title"></h1>
-      <div id="wf-detail-stack" class="stack-row"></div>
     </div>
   </div>
   <div class="wf-detail-body">
     <button class="wf-detail-back" onclick="go('portfolio')">← Back to Portfolio</button>
+    <div class="wf-detail-tools">
+      <div class="wf-detail-tools-label">Built with</div>
+      <div id="wf-detail-stack" class="wf-detail-tools-row"></div>
+    </div>
     <div class="wf-detail-divider"></div>
     <div id="wf-detail-story" class="wf-detail-story"></div>
   </div>
@@ -752,7 +758,7 @@ function renderGrid(f){
       <h3>${w.t}</h3>
       <p>${w.d}</p>
       <div class="stack-row">${w.s.map(s=>`<span class="st">${s}</span>`).join('')}</div>
-      ${w.story?`<div class="wf-card-read"><span>Read the story</span><span>→</span></div>`:''}
+      ${w.story?`<div class="wf-card-read"><span>How it was built</span><span>→</span></div>`:''}
     </div>
   `).join('');
 }
@@ -766,7 +772,7 @@ function goWorkflow(slug){
   document.getElementById('wf-detail-top').innerHTML =
     `<span class="cat-badge ${CAT_CLS[w.c]||'c-agent'}">${w.cl}</span><span class="node-count">${w.n} nodes</span>`;
   document.getElementById('wf-detail-stack').innerHTML =
-    w.s.map(s=>`<span class="st">${s}</span>`).join('');
+    w.s.map(s=>`<span class="wf-tool">${s}</span>`).join('');
   document.getElementById('wf-detail-story').innerHTML =
     (w.story||[]).map(p=>`<p>${p}</p>`).join('');
   go('workflow');
