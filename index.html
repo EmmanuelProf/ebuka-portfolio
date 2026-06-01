@@ -219,6 +219,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 .form-err{display:none;padding:.9rem 1.2rem;border-radius:var(--radius);background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.3);font-family:var(--mono);font-size:.75rem;margin-top:.25rem}
 @media(max-width:500px){.form-row{grid-template-columns:1fr}}
 
+/* CARD READ INDICATOR */
+.wf-card.has-story{cursor:pointer}
+.wf-card-read{position:absolute;bottom:-44px;left:0;right:0;padding:.7rem 1.5rem .55rem;background:linear-gradient(to top,rgba(59,130,246,.95),rgba(59,130,246,.6) 70%,transparent);font-family:var(--mono);font-size:.68rem;color:#fff;display:flex;align-items:center;justify-content:space-between;transition:bottom .28s ease;z-index:3;pointer-events:none;letter-spacing:.03em}
+.wf-card.has-story:hover .wf-card-read{bottom:0}
+.wf-card.has-story:hover{outline:1px solid rgba(59,130,246,.4)}
+
+/* WORKFLOW DETAIL PAGE */
+.wf-detail-banner{position:relative;height:400px;overflow:hidden}
+.wf-detail-banner img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.wf-detail-banner-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(13,17,23,.15) 0%,rgba(13,17,23,.9) 100%)}
+.wf-detail-banner-content{position:absolute;bottom:0;left:0;right:0;padding:2.5rem 2rem;max-width:var(--max);margin:0 auto;width:100%}
+.wf-detail-banner-content h1{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-.03em;margin-bottom:.85rem;line-height:1.1}
+.wf-detail-body{max-width:740px;margin:0 auto;padding:2.5rem 2rem 5rem}
+.wf-detail-back{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;color:var(--text-2);cursor:pointer;margin-bottom:2.5rem;transition:color .15s;background:none;border:none;padding:0}
+.wf-detail-back:hover{color:var(--blue)}
+.wf-detail-divider{height:1px;background:var(--border-subtle);margin:0 0 2.5rem}
+.wf-detail-story p{font-size:.97rem;color:var(--text-2);line-height:1.95;margin-bottom:1.3rem;font-weight:300}
+.wf-detail-story p:first-child{font-size:1.05rem;color:var(--text);font-weight:400}
+.wf-detail-story p:last-child{margin-bottom:0}
+.wf-detail-section-label{font-family:var(--mono);font-size:.65rem;color:var(--text-muted);letter-spacing:.09em;text-transform:uppercase;margin-bottom:.75rem;margin-top:2.5rem}
+@media(max-width:640px){.wf-detail-banner{height:260px}.wf-detail-banner-content{padding:1.5rem}}
+
 footer{border-top:1px solid var(--border-subtle);padding:1.75rem 2rem;text-align:center}
 footer p{font-family:var(--mono);font-size:.7rem;color:var(--text-muted)}
 footer a{color:var(--text-2);text-decoration:none}
@@ -658,21 +680,55 @@ footer a:hover{color:var(--text)}
   <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwo@gmail.com">eanulugwo@gmail.com</a> &middot; Lagos, Nigeria</p></footer>
 </div>
 
+<!-- WORKFLOW DETAIL -->
+<div class="page" id="page-workflow">
+  <div class="wf-detail-banner" id="wf-detail-banner">
+    <img id="wf-detail-img" src="" alt="">
+    <div class="wf-detail-banner-overlay"></div>
+    <div class="wf-detail-banner-content">
+      <div id="wf-detail-top" class="wf-card-top" style="margin-bottom:.85rem;position:relative;z-index:1"></div>
+      <h1 id="wf-detail-title"></h1>
+      <div id="wf-detail-stack" class="stack-row"></div>
+    </div>
+  </div>
+  <div class="wf-detail-body">
+    <button class="wf-detail-back" onclick="go('portfolio')">← Back to Portfolio</button>
+    <div class="wf-detail-divider"></div>
+    <div id="wf-detail-story" class="wf-detail-story"></div>
+  </div>
+  <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwo@gmail.com">eanulugwo@gmail.com</a> &middot; Lagos, Nigeria</p></footer>
+</div>
+
 <script>
 const PORTFOLIO = [
-  {t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram & WhatsApp",s:["n8n","Mem0","Telegram","WhatsApp","OpenRouter"],img:"workflow-screenshots/aurelius.png"},
-  {t:"Multi-Platform Social Media Factory",c:"content",cl:"Content AI",n:57,d:"AI content generation + publish across 6+ platforms simultaneously",s:["n8n","Claude","GPT","YouTube","Reddit"],img:"workflow-screenshots/social-factory.png"},
-  {t:"APEX Sales Automation Suite",c:"sales",cl:"Sales AI",n:46,d:"3 workflows: AI lead scoring → CRM routing → reply-aware follow-up → AI proposal generation",s:["n8n","Airtable","Gmail","Slack","OpenRouter"],img:"workflow-screenshots/apex.png"},
-  {t:"AI Viral Video Generator",c:"content",cl:"Content AI",n:40,d:"Script to published video: ElevenLabs, Pexels, YouTube API",s:["n8n","ElevenLabs","Pexels","YouTube API"],img:"workflow-screenshots/video.png"},
-  {t:"WhatsApp AI Assistant",c:"conversational",cl:"Conversational AI",n:32,d:"Multimodal agent: text, voice, images, PDFs — multiple entry points",s:["n8n","WhatsApp Business API","Claude","OpenRouter"],img:"workflow-screenshots/whatsapp.png"},
+  {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram & WhatsApp",s:["n8n","Mem0","Telegram","WhatsApp","OpenRouter"],img:"workflow-screenshots/aurelius.png",
+   story:["I had been watching support teams copy-paste the same responses over and over. The real problem wasn't volume — it was the complete loss of context. Every new message started from zero, as if the customer had never spoken to the business before. That's what I set out to fix.","The memory architecture was the hardest part. Querying Mem0 before every response and writing back after — without adding noticeable latency — required careful sequencing. The workflow queries memory and the incoming message in parallel, merges both into the prompt context, then Claude generates the response. The order matters.","The 78 nodes aren't complexity for its own sake. Each one handles a real edge case: voice note transcription, image handling, intent misclassification fallbacks, escalation timing, dual-channel routing between Telegram and WhatsApp. The escalation logic specifically — packaging the full conversation history plus memory summary and a suggested resolution before handing off to a human — took about two days to get right.","It runs without intervention. That was the point."]},
+
+  {slug:"social-factory",t:"Multi-Platform Social Media Factory",c:"content",cl:"Content AI",n:57,d:"AI content generation + publish across 6+ platforms simultaneously",s:["n8n","Claude","GPT","YouTube","Reddit"],img:"workflow-screenshots/social-factory.png",
+   story:["I needed a way to test content strategies across platforms without manually reformatting and reposting everything. The obvious answer was to automate it — but every platform has different format requirements, character limits, image specs, and API quirks.","The workflow generates base content with Claude, then branches into platform-specific formatting nodes. Each branch knows the rules for that platform — Twitter's character limit, Reddit's post structure, YouTube's description format, the metadata each one needs. Six simultaneous publishes from a single trigger.","The interesting engineering challenge was handling API rate limits and partial failures gracefully. If one platform's API fails, the rest shouldn't fail with it. Each branch runs independently and logs its own success or failure back to Google Sheets — so you can see exactly what went through and what didn't.","I used it to run a test account for about three months. The infrastructure worked without issues. Content quality is a prompting problem, not an automation problem — and that's a much easier thing to iterate on when the pipeline itself is solid."]},
+
+  {slug:"apex",t:"APEX Sales Automation Suite",c:"sales",cl:"Sales AI",n:46,d:"3 workflows: AI lead scoring → CRM routing → reply-aware follow-up → AI proposal generation",s:["n8n","Airtable","Gmail","Slack","OpenRouter","Google Docs","Notion"],img:"workflow-screenshots/apex.png",
+   story:["A client was spending 3+ hours a day on lead qualification and follow-up emails. I mapped the entire process on paper first — every decision being made, when, and based on what information. Most of it was repeatable. Most of it shouldn't have required a human at all.","The AI scoring was straightforward to wire up. The tricky part was the reply-detection in the follow-up sequence. Gmail's API returns resultSizeEstimate — not a clean boolean — and you have to query it correctly, account for threading, and handle edge cases where the estimate is non-zero but the thread reply is actually from yourself. Getting that right took more debugging than the rest of the three workflows combined.","The proposal generator was the most satisfying to build. The moment it copies the Google Doc template, fills every placeholder via the Docs batchUpdate API, creates the Notion tracking record, and fires both the Slack and Gmail notifications simultaneously — all within 30 seconds of form submission — that's the kind of thing that makes a client's eyes go wide.","Total build time: about four days across the three workflows. The client recovered those 3 hours the first week it ran."]},
+
+  {slug:"video-generator",t:"AI Viral Video Generator",c:"content",cl:"Content AI",n:40,d:"Script to published video: ElevenLabs, Pexels, YouTube API",s:["n8n","ElevenLabs","Pexels","FFmpeg","YouTube API"],img:"workflow-screenshots/video.png",
+   story:["I wanted to know if you could build a complete video production pipeline — from idea to published video — without opening any editing software. The answer is yes, but the path is messier than you'd expect.","ElevenLabs handles the voice. Pexels supplies B-roll footage based on keywords extracted from the script. The real challenge was FFmpeg — specifically, getting it to run reliably inside an n8n Code node. FFmpeg is powerful but unforgiving: wrong codec, wrong pixel format, wrong container, and it fails silently or produces a corrupt file.","Getting the video assembly right took the most iteration of any part of the build. The final approach: generate the audio track first, calculate its exact duration, pull footage clips that sum to that duration, stitch them in sequence, overlay the audio, add a title card, encode to H.264 for YouTube compatibility. In that order, no shortcuts.","When it works, you submit a topic and a published YouTube video exists roughly 12 minutes later. No clicking required."]},
+
+  {slug:"whatsapp-ai",t:"WhatsApp AI Assistant",c:"conversational",cl:"Conversational AI",n:32,d:"Multimodal agent: text, voice, images, PDFs — multiple entry points",s:["n8n","WhatsApp Business API","Claude","OpenRouter","Whisper"],img:"workflow-screenshots/whatsapp.png",
+   story:["WhatsApp is where most people actually communicate — especially in markets like Nigeria where it's the default messaging layer for both business and personal contact. Building an AI assistant that feels native to that environment meant handling everything people actually send: voice notes, photos, PDFs, typed text. Not just text.","The multimodal routing is the core of the workflow. Voice notes get transcribed via Whisper before the AI sees them. Images are analysed for content and context. PDFs get extracted and chunked. All of this happens before the message reaches Claude — so the AI always receives clean, structured input regardless of what format the user sent.","The challenge was latency. WhatsApp users expect quick responses. Each preprocessing step adds time. The solution was to trigger a typing indicator immediately on receipt, then run all preprocessing in parallel where possible, and only deliver the final response once everything is ready.","It handles real conversations — not just simple queries, but multi-turn business discussions, document reviews, follow-up questions with context from previous messages. The same memory and routing architecture I built for the Aurelius agent, adapted for a direct one-to-one WhatsApp context."]},
+
+  {slug:"lifi",t:"LI.FI Autonomous Capital Manager",c:"fintech",cl:"Fintech",n:24,d:"Autonomous DeFi position monitoring and cross-chain execution",s:["n8n","Solana RPC","Jupiter","LI.FI Protocol","Telegram"],img:"workflow-screenshots/lifi.png",
+   story:["DeFi position management is a solved problem if you're willing to sit at a screen watching charts. I wasn't. The goal was to build something that monitors positions autonomously and only surfaces the decisions that actually need a human.","The workflow pulls live data from Solana RPC on a schedule — token prices, liquidity depth, position health across wallets. It runs that data through decision logic: is the position within expected parameters? Has anything crossed a threshold that warrants action? If yes, it executes via LI.FI's protocol for the cross-chain swap. If no, it does nothing and logs the check.","The alert system was an afterthought that became the most useful part. Instead of constant Telegram pings, it only notifies me when something actually matters — a significant P&L move, a liquidity drop below threshold, a successful rebalance execution. Silence as the default signal. That's harder to build than it sounds, because the temptation is always to add more alerts.","The result: positions get monitored around the clock without me looking at a screen."]},
+
+  {slug:"apex-lead-qual",t:"APEX #1 — Lead Qualification & CRM",c:"sales",cl:"Sales AI",n:13,d:"AI lead scorer → Hot/Warm/Cold CRM routing via Airtable + Slack",s:["n8n","Airtable","Slack","OpenRouter","Gmail","Google Sheets"],img:"workflow-screenshots/apex.png",
+   story:["This is the first of three workflows in the APEX Sales Automation Suite. When a contact form is submitted, this workflow fires immediately — sending a 200 OK back to the user first so they never wait, then processing in parallel.","The AI scorer via OpenRouter evaluates the lead against a detailed system prompt and returns structured JSON: a score from 0 to 100, a tier classification (Hot, Warm, or Cold), the primary pain point detected, recommended action, and estimated deal value. A Switch node then routes the lead based on tier — each path goes to Airtable and triggers different downstream actions.","Hot leads get an immediate Slack alert to the sales channel with the full AI analysis. Cold leads get a personalised acknowledgement email via Gmail. Every lead regardless of tier gets logged to Google Sheets with 13 fields for pipeline reporting.","The whole thing runs in under 4 seconds from form submission to CRM entry and Slack alert."]},
+
   {t:"AI Data Analyst — Chat with DB",c:"data",cl:"Data",n:31,d:"Natural language → AI SQL → live database query results",s:["n8n","Claude","PostgreSQL"]},
-  {t:"LI.FI Autonomous Capital Manager",c:"fintech",cl:"Fintech",n:24,d:"Autonomous DeFi position monitoring and cross-chain execution",s:["n8n","Solana RPC","Jupiter","LI.FI Protocol"],img:"workflow-screenshots/lifi.png"},
   {t:"AI Tech Newsletter — RSS + Gmail",c:"content",cl:"Content AI",n:24,d:"RSS ingestion → AI curation → automated email delivery",s:["n8n","Claude","RSS","Gmail"]},
   {t:"APEX #2 — Follow-Up Sequence Engine",c:"sales",cl:"Sales AI",n:21,d:"Reply-aware 7-day follow-up sequence, auto-stops on reply",s:["n8n","Gmail","Google Sheets","OpenRouter"]},
   {t:"ARIA — AI Life Coach",c:"agent",cl:"AI Agent",n:21,d:"Persistent memory life coach with long-term session context via Mem0",s:["n8n","Claude","Mem0","Telegram"]},
   {t:"Reddit Pain Point Tracker",c:"research",cl:"Research AI",n:20,d:"Monitors subreddits for business pain points and opportunity signals",s:["n8n","Reddit API","Claude"]},
   {t:"NFT Mint Tracker v2",c:"fintech",cl:"Fintech",n:16,d:"Watchlist-based NFT mint tracker with sold-out detection",s:["n8n","Solana","Telegram"]},
-  {t:"APEX #1 — Lead Qualification & CRM",c:"sales",cl:"Sales AI",n:13,d:"AI lead scorer → Hot/Warm/Cold CRM routing via Airtable + Slack",s:["n8n","Airtable","Slack","OpenRouter"],img:"workflow-screenshots/apex.png"},
+  {t:"APEX #3 — AI Proposal Generator",c:"sales",cl:"Sales AI",n:12,d:"AI generates proposal → populates Google Doc template → notifies team",s:["n8n","Google Docs","Slack","Gmail","OpenRouter","Notion"]},
   {t:"DYOR Intelligence Agent",c:"research",cl:"Research AI",n:11,d:"On-chain + narrative research agent for early-stage crypto evaluation",s:["n8n","Claude","Solana"]},
   {t:"CA Intelligence Analyzer",c:"fintech",cl:"Fintech",n:11,d:"Contract address intelligence: liquidity, wallet scoring, market cap",s:["n8n","Solana RPC","Telegram"]},
 ];
@@ -680,9 +736,11 @@ const PORTFOLIO = [
 const CAT_CLS = {agent:'c-agent',content:'c-content',sales:'c-sales',fintech:'c-fintech',conversational:'c-conversational',data:'c-data',research:'c-research',video:'c-video'};
 
 function renderGrid(f){
-  const items = f==='all' ? PORTFOLIO : PORTFOLIO.filter(w=>w.c===f);
+  let items = f==='all' ? [...PORTFOLIO] : PORTFOLIO.filter(w=>w.c===f);
+  // images-first within each filter
+  items.sort((a,b)=>(b.img?1:0)-(a.img?1:0));
   document.getElementById('port-grid').innerHTML = items.map(w=>`
-    <div class="wf-card">
+    <div class="wf-card${w.story?' has-story':''}" ${w.story?`onclick="goWorkflow('${w.slug}')"`:''}>
       ${w.img
         ? `<div class="wf-card-bg"><img src="${w.img}" alt=""><div class="wf-card-bg-overlay"></div></div>`
         : `<div class="wf-dot-bg"></div>`
@@ -694,8 +752,25 @@ function renderGrid(f){
       <h3>${w.t}</h3>
       <p>${w.d}</p>
       <div class="stack-row">${w.s.map(s=>`<span class="st">${s}</span>`).join('')}</div>
+      ${w.story?`<div class="wf-card-read"><span>Read the story</span><span>→</span></div>`:''}
     </div>
   `).join('');
+}
+
+function goWorkflow(slug){
+  const w = PORTFOLIO.find(x=>x.slug===slug);
+  if(!w) return;
+  document.getElementById('wf-detail-img').src = w.img||'';
+  document.getElementById('wf-detail-banner').style.display = w.img ? 'block' : 'none';
+  document.getElementById('wf-detail-title').textContent = w.t;
+  document.getElementById('wf-detail-top').innerHTML =
+    `<span class="cat-badge ${CAT_CLS[w.c]||'c-agent'}">${w.cl}</span><span class="node-count">${w.n} nodes</span>`;
+  document.getElementById('wf-detail-stack').innerHTML =
+    w.s.map(s=>`<span class="st">${s}</span>`).join('');
+  document.getElementById('wf-detail-story').innerHTML =
+    (w.story||[]).map(p=>`<p>${p}</p>`).join('');
+  go('workflow');
+  history.replaceState({page:'workflow',slug},'','/workflow/'+slug);
 }
 
 document.getElementById('filter-bar').addEventListener('click',e=>{
@@ -710,19 +785,29 @@ renderGrid('all');
 function go(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('[data-p]').forEach(a=>a.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
+  const pg = document.getElementById('page-'+name);
+  if(!pg) return;
+  pg.classList.add('active');
   document.querySelectorAll('[data-p="'+name+'"]').forEach(a=>a.classList.add('active'));
   document.querySelector('.nav-links').classList.remove('open');
   window.scrollTo({top:0,behavior:'smooth'});
-  history.pushState({page:name},'',(name==='home'?'/':'/'+name));
+  if(name!=='workflow') history.pushState({page:name},'',(name==='home'?'/':'/'+name));
 }
 
 (function(){
-  const path=window.location.pathname.replace(/^\//,'').replace(/\/$/,'') || 'home';
-  if(['portfolio','about','contact'].includes(path)) go(path);
+  const parts = window.location.pathname.replace(/^\//,'').replace(/\/$/,'').split('/');
+  if(parts[0]==='workflow' && parts[1]){
+    const w = PORTFOLIO.find(x=>x.slug===parts[1]);
+    if(w) goWorkflow(w.slug); else go('portfolio');
+  } else if(['portfolio','about','contact'].includes(parts[0])){
+    go(parts[0]);
+  }
 })();
 
-window.addEventListener('popstate',e=>{if(e.state&&e.state.page)go(e.state.page)});
+window.addEventListener('popstate',e=>{
+  if(e.state&&e.state.slug) goWorkflow(e.state.slug);
+  else if(e.state&&e.state.page) go(e.state.page);
+});
 
 async function handleForm(e){
   e.preventDefault();
