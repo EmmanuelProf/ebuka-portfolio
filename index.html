@@ -216,6 +216,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);backgrou
 .form-btn{background:var(--blue);color:#fff;border:none;padding:.65rem 2rem;border-radius:var(--radius);font-family:var(--sans);font-size:.88rem;cursor:pointer;transition:opacity .15s;align-self:flex-start;font-weight:500}
 .form-btn:hover{opacity:.85}
 .form-ok{display:none;padding:.9rem 1.2rem;border-radius:var(--radius);background:rgba(63,185,80,.1);color:#3fb950;border:1px solid rgba(63,185,80,.3);font-family:var(--mono);font-size:.75rem;margin-top:.25rem}
+.form-err{display:none;padding:.9rem 1.2rem;border-radius:var(--radius);background:rgba(248,81,73,.1);color:#f85149;border:1px solid rgba(248,81,73,.3);font-family:var(--mono);font-size:.75rem;margin-top:.25rem}
 @media(max-width:500px){.form-row{grid-template-columns:1fr}}
 
 footer{border-top:1px solid var(--border-subtle);padding:1.75rem 2rem;text-align:center}
@@ -630,13 +631,17 @@ footer a:hover{color:var(--text)}
     </div>
     <p style="font-size:.75rem;color:var(--text-muted);margin-bottom:1.25rem;font-family:var(--mono)">// or send a message directly</p>
     <form class="cf anim" onsubmit="handleForm(event)">
+      <input type="hidden" name="access_key" value="04216aea-7fba-4731-87e9-5b64ce0442b4">
+      <input type="hidden" name="subject" value="New portfolio enquiry from {name}">
+      <input type="hidden" name="from_name" value="Ebuka Portfolio">
+      <input type="hidden" name="redirect" value="false">
       <div class="form-row">
-        <div class="fg"><label>Name</label><input type="text" placeholder="Your name" required></div>
-        <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com" required></div>
+        <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required></div>
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
       </div>
       <div class="fg">
         <label>Topic</label>
-        <select>
+        <select name="topic">
           <option value="">Select a topic</option>
           <option>Full-time remote role</option>
           <option>Freelance / consulting project</option>
@@ -644,9 +649,10 @@ footer a:hover{color:var(--text)}
           <option>General enquiry</option>
         </select>
       </div>
-      <div class="fg"><label>Message</label><textarea placeholder="Tell me about the project or role..."></textarea></div>
-      <button type="submit" class="form-btn">Send message</button>
+      <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell me about the project or role..."></textarea></div>
+      <button type="submit" class="form-btn" id="form-btn">Send message</button>
       <div class="form-ok" id="form-ok">✓ Message sent. I'll get back to you within 24 hours.</div>
+      <div class="form-err" id="form-err">✕ Something went wrong. Email me directly at eanulugwo@gmail.com</div>
     </form>
   </div>
   <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwo@gmail.com">eanulugwo@gmail.com</a> &middot; Lagos, Nigeria</p></footer>
@@ -718,12 +724,29 @@ function go(name){
 
 window.addEventListener('popstate',e=>{if(e.state&&e.state.page)go(e.state.page)});
 
-function handleForm(e){
+async function handleForm(e){
   e.preventDefault();
   const ok=document.getElementById('form-ok');
-  const btn=e.target.querySelector('.form-btn');
-  ok.style.display='block';btn.textContent='Sent!';
-  setTimeout(()=>{ok.style.display='none';btn.textContent='Send message';e.target.reset();},4000);
+  const err=document.getElementById('form-err');
+  const btn=document.getElementById('form-btn');
+  ok.style.display='none';err.style.display='none';
+  btn.textContent='Sending...';btn.disabled=true;
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(e.target)});
+    const data=await res.json();
+    if(data.success){
+      ok.style.display='block';
+      e.target.reset();
+      setTimeout(()=>{ok.style.display='none';},6000);
+    }else{
+      err.style.display='block';
+      setTimeout(()=>{err.style.display='none';},6000);
+    }
+  }catch{
+    err.style.display='block';
+    setTimeout(()=>{err.style.display='none';},6000);
+  }
+  btn.textContent='Send message';btn.disabled=false;
 }
 </script>
 </body>
