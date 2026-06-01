@@ -353,7 +353,7 @@ footer a:hover{color:var(--text)}
           <span class="node-count">78 nodes</span>
         </div>
         <h3>Aurelius Customer Support Agent v2</h3>
-        <p>Full AI support system with persistent memory, intent routing, and human escalation. Live on Telegram &amp; WhatsApp.</p>
+        <p>Full AI support system with persistent memory, intent routing, and human escalation. Live on Telegram.</p>
         <div class="stack-row"><span class="st">n8n</span><span class="st">Mem0</span><span class="st">Telegram</span><span class="st">OpenAI</span><span class="st">OpenRouter</span><span class="st">Google Sheets</span><span class="st">Google Drive</span><span class="st">Gmail</span></div>
       </div>
       <div class="wf-card">
@@ -505,7 +505,7 @@ footer a:hover{color:var(--text)}
           <p class="cs-problem">A chatbot answers questions from a script. Aurelius is an autonomous support system — it remembers every conversation, understands context, classifies intent, routes to the right logic, and only involves a human when it genuinely needs to.</p>
           <div class="cs-stats">
             <div class="cs-row"><span class="cs-label">Nodes</span><span class="cs-val">78</span></div>
-            <div class="cs-row"><span class="cs-label">Deployed on</span><span class="cs-val" style="font-size:.6rem;letter-spacing:0">Telegram · WhatsApp</span></div>
+            <div class="cs-row"><span class="cs-label">Deployed on</span><span class="cs-val">Telegram</span></div>
             <div class="cs-row"><span class="cs-label">Memory</span><span class="cs-val">Mem0</span></div>
             <div class="cs-row"><span class="cs-label">Status</span><span class="cs-val" style="color:var(--green)">Live</span></div>
           </div>
@@ -529,7 +529,7 @@ footer a:hover{color:var(--text)}
           </div>
           <div class="af-item">
             <h5>Dual Deployment</h5>
-            <p>Live simultaneously on Telegram and WhatsApp through a single entry point. Same memory, same intelligence, same quality on both channels. Zero duplication of logic.</p>
+            <p>Deployed on Telegram. The routing logic, memory layer, and escalation system all run through a single workflow entry point.</p>
           </div>
           <div class="af-item">
             <h5>78 Nodes</h5>
@@ -693,8 +693,8 @@ footer a:hover{color:var(--text)}
 
 <script>
 const PORTFOLIO = [
-  {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram & WhatsApp",s:["n8n","Mem0","Telegram","OpenAI","OpenRouter","Google Sheets","Google Drive","Google Docs","Gmail"],img:"workflow-screenshots/aurelius.png",
-   story:["I had been watching support teams copy-paste the same responses over and over. The real problem wasn't volume — it was the complete loss of context. Every new message started from zero, as if the customer had never spoken to the business before. That's what I set out to fix.","The memory architecture was the hardest part. Querying Mem0 before every response and writing back after — without adding noticeable latency — required careful sequencing. The workflow queries memory and the incoming message in parallel, merges both into the prompt context, then Claude generates the response. The order matters.","The 78 nodes aren't complexity for its own sake. Each one handles a real edge case: voice note transcription, image handling, intent misclassification fallbacks, escalation timing, dual-channel routing between Telegram and WhatsApp. The escalation logic specifically — packaging the full conversation history plus memory summary and a suggested resolution before handing off to a human — took about two days to get right.","It runs without intervention. That was the point."]},
+  {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram.",s:["n8n","Mem0","Telegram","OpenAI","OpenRouter","Google Sheets","Google Drive","Google Docs","Gmail"],img:"workflow-screenshots/aurelius.png",
+   story:["I had been watching support teams copy-paste the same responses over and over. The real problem wasn't volume — it was the complete loss of context. Every new message started from zero, as if the customer had never spoken to the business before. That's what I set out to fix.","The memory architecture was the hardest part. Querying Mem0 before every response and writing back after — without adding noticeable latency — required careful sequencing. The workflow queries memory and the incoming message in parallel, merges both into the prompt context, then Claude generates the response. The order matters.","The 78 nodes aren't complexity for its own sake. Each one handles a real edge case: voice note transcription, image handling, intent misclassification fallbacks, escalation timing, routing logic. The escalation logic specifically — packaging the full conversation history plus memory summary and a suggested resolution before handing off to a human — took about two days to get right.","It runs without intervention. That was the point."]},
 
   {slug:"social-factory",t:"Multi-Platform Social Media Factory",c:"content",cl:"Content AI",n:57,d:"AI content generation + publish across 6+ platforms simultaneously",s:["n8n","Claude","GPT","YouTube","Reddit"],img:"workflow-screenshots/social-factory.png",
    story:["I needed a way to test content strategies across platforms without manually reformatting and reposting everything. The obvious answer was to automate it — but every platform has different format requirements, character limits, image specs, and API quirks.","The workflow generates base content with Claude, then branches into platform-specific formatting nodes. Each branch knows the rules for that platform — Twitter's character limit, Reddit's post structure, YouTube's description format, the metadata each one needs. Six simultaneous publishes from a single trigger.","The interesting engineering challenge was handling API rate limits and partial failures gracefully. If one platform's API fails, the rest shouldn't fail with it. Each branch runs independently and logs its own success or failure back to Google Sheets — so you can see exactly what went through and what didn't.","I used it to run a test account for about three months. The infrastructure worked without issues. Content quality is a prompting problem, not an automation problem — and that's a much easier thing to iterate on when the pipeline itself is solid."]},
