@@ -278,8 +278,8 @@ footer a:hover{color:var(--text)}
 
   <!-- HERO WITH VIDEO BACKGROUND -->
   <section class="hero-section">
-    <video class="hero-video" autoplay muted loop playsinline>
-      <source src="our video.mp4" type="video/mp4">
+    <video class="hero-video" id="hero-vid" autoplay muted loop playsinline webkit-playsinline>
+      <source src="our%20video.mp4" type="video/mp4">
     </video>
     <div class="hero-video-overlay"></div>
     <div class="hero-grid-overlay"></div>
@@ -800,6 +800,17 @@ window.addEventListener('popstate',e=>{
   if(e.state&&e.state.slug) goWorkflow(e.state.slug);
   else if(e.state&&e.state.page) go(e.state.page);
 });
+
+// Force video play on mobile (some browsers block autoplay until nudged)
+(function(){
+  const v = document.getElementById('hero-vid');
+  if(!v) return;
+  v.muted = true;
+  const tryPlay = () => v.play().catch(()=>{});
+  tryPlay();
+  document.addEventListener('touchstart', tryPlay, {once:true});
+  document.addEventListener('click', tryPlay, {once:true});
+})();
 
 async function handleForm(e){
   e.preventDefault();
