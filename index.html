@@ -352,6 +352,39 @@ document.head.appendChild(o)}initApollo();</script>
       <p class="sec-sub">A selection of the most complex and commercially relevant — independently designed, built, and deployed.</p>
     </div>
     <div class="wf-grid anim">
+      <div class="wf-card has-story" onclick="goWorkflow('nova')">
+        <div class="wf-dot-bg"></div>
+        <div class="wf-card-top">
+          <span class="cat-badge c-agent">AI Agent</span>
+          <span class="node-count">37 nodes</span>
+        </div>
+        <h3>Nova — Shopify AI Support Agent</h3>
+        <p>Shopify-native AI support agent with intent classification, live order lookup, and human escalation via Telegram.</p>
+        <div class="stack-row"><span class="st">n8n</span><span class="st">OpenAI</span><span class="st">Shopify API</span><span class="st">Telegram</span><span class="st">Gmail</span></div>
+        <div class="wf-card-read"><span>How it was built</span><span>→</span></div>
+      </div>
+      <div class="wf-card has-story" onclick="goWorkflow('abandoned-cart')">
+        <div class="wf-dot-bg"></div>
+        <div class="wf-card-top">
+          <span class="cat-badge c-sales">Sales AI</span>
+          <span class="node-count">22 nodes</span>
+        </div>
+        <h3>Abandoned Cart Recovery Engine</h3>
+        <p>Shopify abandoned checkout recovery — smart timing, AI-personalised emails, and completion detection that stops chasing already-converted customers.</p>
+        <div class="stack-row"><span class="st">n8n</span><span class="st">Shopify</span><span class="st">OpenAI</span><span class="st">Gmail</span><span class="st">Google Sheets</span></div>
+        <div class="wf-card-read"><span>How it was built</span><span>→</span></div>
+      </div>
+      <div class="wf-card has-story" onclick="goWorkflow('agent-reply-bridge')">
+        <div class="wf-dot-bg"></div>
+        <div class="wf-card-top">
+          <span class="cat-badge c-conversational">Conversational AI</span>
+          <span class="node-count">8 nodes</span>
+        </div>
+        <h3>Agent Reply + Chatbot Bridge</h3>
+        <p>Real-time human-agent reply bridge — stores Telegram replies by session ID and delivers them back to the customer via polling webhook.</p>
+        <div class="stack-row"><span class="st">n8n</span><span class="st">Telegram</span><span class="st">Webhooks</span></div>
+        <div class="wf-card-read"><span>How it was built</span><span>→</span></div>
+      </div>
       <div class="wf-card">
         <div class="wf-card-bg"><img src="workflow-screenshots/aurelius.png" alt=""><div class="wf-card-bg-overlay"></div></div>
         <div class="wf-card-top">
@@ -546,6 +579,156 @@ document.head.appendChild(o)}initApollo();</script>
     </div>
   </div>
 
+  <!-- CASE STUDY: NOVA -->
+  <div class="case-study">
+    <div class="cs-inner">
+      <div class="anim">
+        <div class="sec-eyebrow">Case Study</div>
+        <h2 class="sec-title">Nova — Shopify AI Support Agent</h2>
+        <p class="sec-sub">37 nodes. Seven intent paths. A support system that actually resolves issues instead of deflecting them.</p>
+      </div>
+      <div class="cs-layout anim">
+        <div class="cs-meta">
+          <div class="cs-tag">// ai-agent · shopify · 37-nodes</div>
+          <h3>Intent-first.<br>Not script-first.</h3>
+          <p class="cs-problem">Most Shopify support chatbots answer three questions then say 'please contact support'. Nova was built to classify intent before generating any response — and route to dedicated logic for each one.</p>
+          <div class="cs-stats">
+            <div class="cs-row"><span class="cs-label">Nodes</span><span class="cs-val">37</span></div>
+            <div class="cs-row"><span class="cs-label">Intent paths</span><span class="cs-val">7</span></div>
+            <div class="cs-row"><span class="cs-label">Deployed on</span><span class="cs-val">Shopify Chat</span></div>
+            <div class="cs-row"><span class="cs-label">Status</span><span class="cs-val" style="color:var(--green)">Live</span></div>
+          </div>
+        </div>
+        <div class="af-grid">
+          <div class="af-item">
+            <h5>OpenAI Intent Classifier</h5>
+            <p>Every incoming message hits an intent classifier before any response is generated. Returns structured JSON: intent category, confidence, and routing instruction. No assumptions — just classification.</p>
+          </div>
+          <div class="af-item">
+            <h5>Seven Dedicated Handlers</h5>
+            <p>Greeting, FAQ, order lookup, return request, complaint, cancellation, and escalation each have their own OpenAI node with a purpose-built prompt. A complaint is handled differently from a return. The routing makes that precise.</p>
+          </div>
+          <div class="af-item">
+            <h5>Live Shopify Order Lookup</h5>
+            <p>When a customer asks about their order, the workflow hits the Shopify API in real time. Actual order status, tracking, and delivery details — not a cached summary.</p>
+          </div>
+          <div class="af-item">
+            <h5>Human Mode Toggle</h5>
+            <p>When an agent takes over, all subsequent messages route directly to Telegram. The AI steps aside completely. When the flag clears, it resumes. No message gets lost in the handoff.</p>
+          </div>
+          <div class="af-item">
+            <h5>Dual Escalation Alert</h5>
+            <p>Escalations fire a Telegram alert and a Gmail notification simultaneously — with the full conversation thread and a suggested resolution packaged in. The human opens the ticket with complete context.</p>
+          </div>
+          <div class="af-item">
+            <h5>Webhook Response Architecture</h5>
+            <p>Every path ends with a dedicated respond node. The customer gets a reply regardless of which branch fired — no silent failures, no timeouts, no dead ends.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE STUDY: ABANDONED CART -->
+  <div class="case-study">
+    <div class="cs-inner">
+      <div class="anim">
+        <div class="sec-eyebrow">Case Study</div>
+        <h2 class="sec-title">Abandoned Cart Recovery Engine</h2>
+        <p class="sec-sub">22 nodes. Two entry paths. One rule — never email a customer who already bought.</p>
+      </div>
+      <div class="cs-layout anim">
+        <div class="cs-meta">
+          <div class="cs-tag">// sales-ai · shopify · 22-nodes</div>
+          <h3>Recover carts.<br>Not customers.</h3>
+          <p class="cs-problem">Most abandoned cart flows send the same generic template to every customer, ignore whether they've already purchased, and miss guests who don't provide an email at first checkout. This one doesn't.</p>
+          <div class="cs-stats">
+            <div class="cs-row"><span class="cs-label">Nodes</span><span class="cs-val">22</span></div>
+            <div class="cs-row"><span class="cs-label">Entry paths</span><span class="cs-val">2</span></div>
+            <div class="cs-row"><span class="cs-label">Stack</span><span class="cs-val" style="font-size:.6rem;letter-spacing:0">Shopify · OpenAI · Gmail · Google Sheets</span></div>
+            <div class="cs-row"><span class="cs-label">Status</span><span class="cs-val" style="color:var(--green)">Live</span></div>
+          </div>
+        </div>
+        <div class="af-grid">
+          <div class="af-item">
+            <h5>Dual Webhook Entry</h5>
+            <p>Fires on both checkout create and checkout update events. The Switch node handles both — create starts the abandonment flow, update catches the edge case where a guest provides their email after the initial checkout.</p>
+          </div>
+          <div class="af-item">
+            <h5>1-Hour Completion Check</h5>
+            <p>After detecting an abandonment, the workflow waits one hour then checks Google Sheets to confirm the cart is still open. If the customer completed the purchase in that window, the recovery email never sends.</p>
+          </div>
+          <div class="af-item">
+            <h5>AI-Personalised Recovery Emails</h5>
+            <p>OpenAI writes a personalised recovery email using the cart contents and customer name from the Shopify payload. Not a generic template — the email references what they were actually about to buy.</p>
+          </div>
+          <div class="af-item">
+            <h5>Full Logging via Google Sheets</h5>
+            <p>Every event is logged: abandonment detected, email sent, recovery sent, order completed. Both paths write to the same sheet with 13 status fields — full visibility across the entire funnel.</p>
+          </div>
+          <div class="af-item">
+            <h5>Independent Parallel Paths</h5>
+            <p>The create path and update path each run the full recovery sequence independently. No shared state between them — which means the email edge case (guest provides email late) is handled without breaking the main path.</p>
+          </div>
+          <div class="af-item">
+            <h5>Smart Completion Detection</h5>
+            <p>The workflow looks up the cart token in Google Sheets when a Shopify order is placed and marks it completed. This is the check that prevents sending a recovery email to someone who already converted.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE STUDY: AGENT REPLY BRIDGE -->
+  <div class="case-study">
+    <div class="cs-inner">
+      <div class="anim">
+        <div class="sec-eyebrow">Case Study</div>
+        <h2 class="sec-title">Agent Reply + Chatbot Bridge</h2>
+        <p class="sec-sub">8 nodes. No database. The infrastructure that makes human handoffs invisible to the customer.</p>
+      </div>
+      <div class="cs-layout anim">
+        <div class="cs-meta">
+          <div class="cs-tag">// conversational-ai · polling · 8-nodes</div>
+          <h3>The seam between<br>AI and human.</h3>
+          <p class="cs-problem">When Nova escalates to a human, that agent replies via Telegram. Getting that reply back to the customer on Shopify chat — without visible delay or switching interface — requires a polling bridge. This is it.</p>
+          <div class="cs-stats">
+            <div class="cs-row"><span class="cs-label">Nodes</span><span class="cs-val">8</span></div>
+            <div class="cs-row"><span class="cs-label">Pattern</span><span class="cs-val">Webhook polling</span></div>
+            <div class="cs-row"><span class="cs-label">State storage</span><span class="cs-val">n8n static data</span></div>
+            <div class="cs-row"><span class="cs-label">Status</span><span class="cs-val" style="color:var(--green)">Live</span></div>
+          </div>
+        </div>
+        <div class="af-grid">
+          <div class="af-item">
+            <h5>Polling Architecture</h5>
+            <p>The main chatbot holds an open webhook that waits for a reply with a specific session ID. This workflow stores the reply the moment the agent sends it — the poll immediately resolves and delivers it to the customer.</p>
+          </div>
+          <div class="af-item">
+            <h5>Session ID Validation</h5>
+            <p>Every incoming Telegram message is checked for a valid session ID before storage. Invalid or missing IDs get an error message back to the agent immediately — no silent misrouting, no reply landing in the wrong customer's session.</p>
+          </div>
+          <div class="af-item">
+            <h5>Instant Agent Confirmation</h5>
+            <p>Once the reply is stored, Telegram sends a confirmation back to the agent. They know the message was delivered without having to ask. Invalid replies also get feedback so the agent knows to retry.</p>
+          </div>
+          <div class="af-item">
+            <h5>Zero External Infrastructure</h5>
+            <p>No Redis, no external database, no extra services. n8n's static data handles the reply storage. The simplest solution that works reliably at the session scale this system operates at.</p>
+          </div>
+          <div class="af-item">
+            <h5>Invisible Handoff</h5>
+            <p>From the customer's perspective, the conversation continues in the same Shopify chat window. There's no 'you're being transferred' message, no interface change — just continuous conversation.</p>
+          </div>
+          <div class="af-item">
+            <h5>Part of a Larger System</h5>
+            <p>This workflow doesn't stand alone — it's the reply layer of the Nova support system. Three workflows (Nova, Abandoned Cart, Agent Reply Bridge) form a complete Shopify customer operations stack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div class="cta-section anim">
     <div class="cta-box">
@@ -585,7 +768,7 @@ document.head.appendChild(o)}initApollo();</script>
     <button class="fb" data-f="research">Research AI</button>
   </div>
   <div class="port-grid anim" id="port-grid"></div>
-  <div class="port-note anim">100+ total workflows built. Showing the <span>15 most complex</span> and commercially relevant. Additional workflows available on request.</div>
+  <div class="port-note anim">100+ total workflows built. Showing the <span>18 most complex</span> and commercially relevant. Additional workflows available on request.</div>
   <footer><p>Ebuka Anulugwo &middot; <a href="mailto:eanulugwo@gmail.com">eanulugwo@gmail.com</a> &middot; Lagos, Nigeria &mdash; Available Remote Worldwide</p></footer>
 </div>
 
@@ -699,6 +882,15 @@ document.head.appendChild(o)}initApollo();</script>
 
 <script>
 const PORTFOLIO = [
+  {slug:"nova",t:"Nova — Shopify AI Support Agent",c:"agent",cl:"AI Agent",n:37,d:"Shopify-native AI support agent with intent classification, live order lookup, and human escalation via Telegram.",s:["n8n","OpenAI","Shopify API","Telegram","Gmail"],
+   story:["Most Shopify stores bolt on a generic chatbot that answers three questions before saying 'please contact support'. Nova was built to actually resolve issues — which means it needs to understand what the customer is asking before generating any response.","Every message hits an OpenAI intent classifier first. The classifier returns structured JSON: the intent category — greeting, FAQ, order enquiry, return request, complaint, or cancellation. That drives a routing switch with seven paths, each handled by a dedicated OpenAI node with a prompt tuned specifically for that intent type.","Order lookups are live. When a customer asks about their order, the workflow queries the Shopify API in real time using their email address — no stale data, no 'let me check and get back to you'. The response includes actual order status and tracking details.","The human handoff is where most chatbots fail. Nova's escalation path packages the full conversation thread, the detected intent, and a suggested resolution — then fires a Telegram alert to the support team and a Gmail notification simultaneously. Human mode is a toggle: when an agent takes over, all subsequent messages route directly to Telegram and the AI steps aside completely until the flag is cleared.","37 nodes. Webhook entry → intent classification → seven handler branches → escalation logic → response. That's what makes it reliable — not clever prompting, but well-structured routing."]},
+
+  {slug:"abandoned-cart",t:"Abandoned Cart Recovery Engine",c:"sales",cl:"Sales AI",n:22,d:"Shopify abandoned checkout recovery — smart timing, AI-personalised recovery emails, and completion detection that stops chasing already-converted customers.",s:["n8n","Shopify","OpenAI","Gmail","Google Sheets"],
+   story:["Abandoned cart emails are one of the highest-ROI automations in e-commerce — and most stores either don't have them or use the same generic template for every customer. This workflow does it right.","The Shopify webhook fires on both checkout create and checkout update events. A Switch node handles both paths — create triggers the new abandonment flow, update handles the edge case where a guest initially checks out without an email address, then provides one later. Both paths converge into the same recovery logic.","Timing is deliberate. After detecting an abandonment, the workflow waits one hour before checking Google Sheets to confirm the cart is still open. If the customer completed their purchase in that window, the recovery email never fires. This prevents the classic mistake of emailing someone who already bought from you.","OpenAI writes a personalised recovery email using the cart contents and customer name from the Shopify payload. Not a generic 'you left something behind' — the email references what they were actually about to buy. Gmail sends it. Google Sheets logs every event: abandonment detected, email sent, order completed, recovery sent.","22 nodes across two parallel paths sharing the same recovery logic. The create path and update path both run the same 1-hour wait → status check → AI email → Gmail send sequence independently. That's what handles the email edge case cleanly."]},
+
+  {slug:"agent-reply-bridge",t:"Agent Reply + Chatbot Bridge",c:"conversational",cl:"Conversational AI",n:8,d:"Real-time human-agent reply bridge — stores Telegram replies by session ID and delivers them back to the customer via polling webhook.",s:["n8n","Telegram","Webhooks"],
+   story:["When Nova escalates to a human agent, the agent replies via Telegram. That reply needs to get back to the customer on the Shopify chat interface. This 8-node workflow is the bridge that makes it happen.","The architecture uses a polling pattern. The main chatbot holds an open webhook that waits for a reply with a specific session ID. When the human agent sends a Telegram message tagged with that session ID, this workflow stores it in n8n static data and confirms delivery back to the agent via Telegram.","The next poll cycle from the chatbot picks up the stored reply, returns it as the webhook response, and the customer sees the human agent's message — with no visible seam between the AI and human responses.","Session ID validation is the critical piece. Without it, a reply from one agent could land in the wrong customer's session. The IF node checks the session ID before storing — invalid or missing IDs get an immediate error message back to the agent via Telegram.","Eight nodes. No external database, no Redis, no extra infrastructure — just n8n static data and a webhook polling pattern. The simplest solution that actually works."]},
+
   {slug:"aurelius",t:"Aurelius Customer Support Agent v2",c:"agent",cl:"AI Agent",n:78,d:"Full AI support: memory, intent routing, escalation — live on Telegram.",s:["n8n","Mem0","Telegram","OpenAI","OpenRouter","Google Sheets","Google Drive","Google Docs","Gmail"],img:"workflow-screenshots/aurelius.png",
    story:["I had been watching support teams copy-paste the same responses over and over. The real problem wasn't volume — it was the complete loss of context. Every new message started from zero, as if the customer had never spoken to the business before. That's what I set out to fix.","The memory architecture was the hardest part. Querying Mem0 before every response and writing back after — without adding noticeable latency — required careful sequencing. The workflow queries memory and the incoming message in parallel, merges both into the prompt context, then Claude generates the response. The order matters.","The 78 nodes aren't complexity for its own sake. Each one handles a real edge case: voice note transcription, image handling, intent misclassification fallbacks, escalation timing, routing logic. The escalation logic specifically — packaging the full conversation history plus memory summary and a suggested resolution before handing off to a human — took about two days to get right.","It runs without intervention. That was the point."]},
 
